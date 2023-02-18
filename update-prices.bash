@@ -6,7 +6,7 @@ result_file="./result.tmp"
 now="$(date -Iseconds)"
 
 pnpm run start > "$result_file"
-epoch=$(ggrep -oP "^epoch \K[0-9.]*" "$result_file")
+epoch=$(grep -oP "^epoch \K[0-9.]*" "$result_file")
 
 if [[ -z $epoch ]]
 then
@@ -24,7 +24,7 @@ function update_db {
         exit 1
     fi
 
-    price=$(ggrep -oP "^$search_exp \K[0-9.]*" "$result_file")
+    price=$(grep -oP "^$search_exp \K[0-9.]*" "$result_file")
     if [[ -z $price ]]
     then
         echo "Price not found in the result file!"
