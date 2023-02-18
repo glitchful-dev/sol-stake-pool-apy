@@ -8,54 +8,53 @@ jobs:
     name: Trigger Lambda Run
     runs-on: ubuntu-latest
     steps:
-      steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
+    - uses: pnpm/action-setup@v2
+      name: Install pnpm
+      id: pnpm-install
+      with:
+        version: 7
+        run_install: false
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+    - uses: actions/cache@v3
+      name: Setup pnpm cache
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
-        run: pnpm install
+    - name: Install dependencies
+      run: pnpm install
 
-      - name: Build project
-        run: pnpm run build
+    - name: Build project
+      run: pnpm run build
 
-      - name: Get prices
-        env:
-          WALLET: ${{ secrets.WALLET }}
-        run: ./update-prices.bash
+    - name: Get prices
+      env:
+        WALLET: ${{ secrets.WALLET }}
+      run: ./update-prices.bash
 
-      - name: Prune prices
-        run: ./prune-prices.bash
+    - name: Prune prices
+      run: ./prune-prices.bash
 
-      - name: Commit changes
-        run: |
-          git config --global user.name 'Lambda - Automatic Price Updator'
-          git config --global user.email 'lambda@users.noreply.github.com'
-          git add db
-          git commit -m "automated price update"
-          git push
+    - name: Commit changes
+      run: |
+        git config --global user.name 'Lambda - Automatic Price Updator'
+        git config --global user.email 'lambda@users.noreply.github.com'
+        git add db
+        git commit -m "automated price update"
+        git push
