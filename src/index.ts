@@ -19,7 +19,8 @@ const getEnvVar = (key: string) => {
   );
   const clusterUrl = 'http://api.mainnet-beta.solana.com';
   const connection = new Connection(clusterUrl);
-
+  const {epoch} = await connection.getEpochInfo();
+  process.stdout.write(`epoch ${epoch}\n`);
   const trackers: StakePoolTracker[] = [
     new SPLStakePoolTracker(
       'Jito',
