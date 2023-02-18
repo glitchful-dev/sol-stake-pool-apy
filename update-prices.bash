@@ -37,7 +37,7 @@ function update_db {
 }
 
 update_db './db/jito.csv' Jito
-update_db './db/lido.csv'
-update_db './db/marinade.csv'
+update_db './db/lido.csv' Lido
+update_db './db/marinade.csv' Marinade
 
 rm "$result_file"
