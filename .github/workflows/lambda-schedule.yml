@@ -2,7 +2,7 @@ name: Update DB
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '16 * * * *'
 jobs:
   build:
     name: Trigger Lambda Run
