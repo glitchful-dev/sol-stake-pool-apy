@@ -1,5 +1,7 @@
 name: Update DB
 
+permissions: write-all
+
 on:
   schedule:
     - cron: '0/10 * * * *'
