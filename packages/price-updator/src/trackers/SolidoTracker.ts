@@ -60,7 +60,10 @@ export class SolidoTracker implements StakePoolTracker {
       throw new Error('Token account not returned from the simulation!');
     }
 
-    const [accountData] = tokenAccountRaw?.data!;
+    const [accountData] = tokenAccountRaw?.data;
+    if (!accountData) {
+      throw new Error('Account data missing!');
+    }
     const tokenAccount = AccountLayout.decode(
       Buffer.from(accountData, 'base64')
     );

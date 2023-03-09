@@ -1,0 +1,23 @@
+{
+  "name": "sol-stake-pool-apy",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "engines" : { 
+    "node" : ">=10.4.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@lidofinance/solido-sdk": "^0.8.1",
+    "@marinade.finance/marinade-ts-sdk": "^4.0.4",
+    "@solana/spl-stake-pool": "^0.6.5",
+    "@solana/spl-token": "^0.3.7",
+    "@solana/web3.js": "^1.73.2",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.2"
+  }
+}

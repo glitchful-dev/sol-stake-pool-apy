@@ -1,34 +1,38 @@
+import {getStakePoolAccount, depositSol} from '@solana/spl-stake-pool';
 import {
   Connection,
+  PublicKey,
   VersionedTransaction,
   Keypair,
   TransactionMessage,
 } from '@solana/web3.js';
 import {AccountLayout} from '@solana/spl-token';
-import {getAssociatedTokenBalance, Logger} from '../utils';
+import {
+  findAssociatedTokenAddress,
+  getAssociatedTokenBalance,
+  Logger,
+} from '../utils';
 import {StakePoolTracker} from './StakePoolTracker';
-import {Marinade, MarinadeConfig, BN} from '@marinade.finance/marinade-ts-sdk';
 
-export class MarinadeTracker implements StakePoolTracker {
-  public poolName = 'Marinade';
+export class SPLStakePoolTracker implements StakePoolTracker {
   private readonly logger = new Logger(`tracker:${this.poolName}`);
   constructor(
+    public readonly poolName: string,
     private readonly connection: Connection,
+    private readonly stakePoolAddress: PublicKey,
     private readonly staker: Keypair
   ) {}
 
   async getTokenPrice(): Promise<number> {
-    const marinadeConfig = new MarinadeConfig({
-      connection: this.connection,
-      publicKey: this.staker.publicKey,
-    });
-    const marinade = new Marinade(marinadeConfig);
-    const depositAmount = 1e9;
-    const {
-      associatedMSolTokenAccountAddress: stakerAssociatedTokenAccount,
-      transaction: {instructions},
-    } = await marinade.deposit(new BN(depositAmount));
-
+    const stakePoolAccount = await getStakePoolAccount(
+      this.connection,
+      this.stakePoolAddress
+    );
+    const {poolMint} = stakePoolAccount.account.data;
+    const stakerAssociatedTokenAccount = findAssociatedTokenAddress(
+      this.staker.publicKey,
+      poolMint
+    );
     const balance = await this.connection.getBalance(this.staker.publicKey);
     const tokenBalance = await getAssociatedTokenBalance(
       this.connection,
@@ -37,8 +41,16 @@ export class MarinadeTracker implements StakePoolTracker {
 
     const {blockhash: recentBlockhash} =
       await this.connection.getLatestBlockhash();
+
     this.logger.info('Balance before simulation', {balance, tokenBalance});
 
+    const depositAmount = 1e9;
+    const {instructions} = await depositSol(
+      this.connection,
+      this.stakePoolAddress,
+      this.staker.publicKey,
+      depositAmount
+    );
     const versionedMessage = new TransactionMessage({
       payerKey: this.staker.publicKey,
       recentBlockhash,
@@ -61,7 +73,10 @@ export class MarinadeTracker implements StakePoolTracker {
       throw new Error('Token account not returned from the simulation!');
     }
 
-    const [accountData] = tokenAccountRaw?.data!;
+    const [accountData] = tokenAccountRaw?.data;
+    if (!accountData) {
+      throw new Error('Account data missing!');
+    }
     const tokenAccount = AccountLayout.decode(
       Buffer.from(accountData, 'base64')
     );
@@ -73,6 +88,6 @@ export class MarinadeTracker implements StakePoolTracker {
       receivedAmount,
     });
 
-    return Number(depositAmount) / Number(receivedAmount);
+    return depositAmount / Number(receivedAmount);
   }
 }
