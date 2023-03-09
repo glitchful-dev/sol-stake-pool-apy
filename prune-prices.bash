@@ -13,7 +13,7 @@ function prune_db {
     tmp_file=$(mktemp)
     cp "$db_file" "$tmp_file"
     awk -F , '{
-        current = $2 "," $3
+        current = $2 "," substr($3, 1, 8)
         if (previous != current) {
             print $0
         }
@@ -22,6 +22,6 @@ function prune_db {
     rm "$tmp_file"
 }
 
-prune_db './db/jito.csv' Jito
+prune_db './db/jito.csv'
 prune_db './db/lido.csv'
 prune_db './db/marinade.csv'
