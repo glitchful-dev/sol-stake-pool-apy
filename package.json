@@ -8,7 +8,7 @@
         "clean": "gts clean",
         "compile": "tsc",
         "fix": "gts fix",
-        "publish": "pnpm compile && cd build/packages/sol-apy-sdk && pnpm publish --dry-run"
+        "publish": "pnpm compile && cd build/packages/sol-apy-sdk && pnpm publish"
     },
     "devDependencies": {
         "gts": "^3.1.1",
