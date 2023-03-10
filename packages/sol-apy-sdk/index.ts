@@ -7,6 +7,13 @@ const DATA_SOURCE_BASE =
   'https://raw.githubusercontent.com/glitchful-dev/sol-stake-pool-apy/master/db/';
 export const DATA_SOURCE = {
   JITO_CSV: `${DATA_SOURCE_BASE}jito.csv`,
+  LAINE_CSV: `${DATA_SOURCE_BASE}laine.csv`,
+  COGENT_CSV: `${DATA_SOURCE_BASE}cogent.csv`,
+  DAOPOOL_CSV: `${DATA_SOURCE_BASE}daopool.csv`,
+  EVERSTAKE_CSV: `${DATA_SOURCE_BASE}everstake.csv`,
+  SOCEAN_CSV: `${DATA_SOURCE_BASE}socean.csv`,
+  JPOOL_CSV: `${DATA_SOURCE_BASE}jpool.csv`,
+  SOLBLAZE_CSV: `${DATA_SOURCE_BASE}solblaze.csv`,
   LIDO_CSV: `${DATA_SOURCE_BASE}lido.csv`,
   MARINADE_CSV: `${DATA_SOURCE_BASE}marinade.csv`,
 };
