@@ -2,11 +2,12 @@
     "author": {
         "name": "Jan Legner"
     },
-    "version": "1.0.0",
-    "main": "./index.js",
+    "version": "1.0.5",
+    "main": "index.js",
     "types": "./index.d.ts",
     "license": "UNLICENCED",
     "name": "@glitchful-dev/sol-apy-sdk",
+    "files": ["*.js", "*.d.ts"],
     "dependencies": {
         "csv-parse": "^5.3.6",
         "fetch-ponyfill": "^7.1.0"
