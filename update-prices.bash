@@ -36,6 +36,13 @@ function update_db {
     echo "$now,$epoch,$price" >> "$db_file"
 }
 
+update_db './db/laine.csv' Laine
+update_db './db/cogent.csv' Cogent
+update_db './db/everstake.csv' Everstake
+update_db './db/solblaze.csv' Solblaze
+update_db './db/daopool.csv' Daopool
+update_db './db/jpool.csv' Jpool
+update_db './db/socean.csv' Socean
 update_db './db/jito.csv' Jito
 update_db './db/lido.csv' Lido
 update_db './db/marinade.csv' Marinade

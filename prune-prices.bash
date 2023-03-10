@@ -22,6 +22,13 @@ function prune_db {
     rm "$tmp_file"
 }
 
+prune_db './db/laine.csv'
+prune_db './db/cogent.csv'
+prune_db './db/everstake.csv'
+prune_db './db/solblaze.csv'
+prune_db './db/daopool.csv'
+prune_db './db/jpool.csv'
+prune_db './db/socean.csv'
 prune_db './db/jito.csv'
 prune_db './db/lido.csv'
 prune_db './db/marinade.csv'
