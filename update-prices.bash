@@ -24,7 +24,7 @@ function update_db {
         exit 1
     fi
 
-    price=$(grep -oP "^$search_exp \K[0-9.]*" "$result_file")
+    price=$(grep -ioP "^$search_exp \K[0-9.]*" "$result_file")
     if [[ -z $price ]]
     then
         echo "Price not found in the result file!"
@@ -36,6 +36,13 @@ function update_db {
     echo "$now,$epoch,$price" >> "$db_file"
 }
 
+update_db './db/laine.csv' Laine
+update_db './db/cogent.csv' Cogent
+#update_db './db/everstake.csv' Everstake
+update_db './db/solblaze.csv' SolBlaze
+update_db './db/daopool.csv' DAOPool
+update_db './db/jpool.csv' JPool
+#update_db './db/socean.csv' Socean
 update_db './db/jito.csv' Jito
 update_db './db/lido.csv' Lido
 update_db './db/marinade.csv' Marinade

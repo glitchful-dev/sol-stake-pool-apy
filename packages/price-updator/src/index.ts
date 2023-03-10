@@ -17,11 +17,53 @@ const getEnvVar = (key: string) => {
   const staker = Keypair.fromSecretKey(
     new Uint8Array(JSON.parse(getEnvVar('WALLET')))
   );
-  const clusterUrl = 'http://api.mainnet-beta.solana.com';
+  const clusterUrl = getEnvVar('RPC_URL');
   const connection = new Connection(clusterUrl);
   const {epoch} = await connection.getEpochInfo();
   process.stdout.write(`epoch ${epoch}\n`);
   const trackers: StakePoolTracker[] = [
+    new SPLStakePoolTracker(
+      'Cogent',
+      connection,
+      new PublicKey('Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb'),
+      staker
+    ),
+    new SPLStakePoolTracker(
+      'Laine',
+      connection,
+      new PublicKey('Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb'),
+      staker
+    ),
+    new SPLStakePoolTracker(
+      'JPool',
+      connection,
+      new PublicKey('CtMyWsrUtAwXWiGr9WjHT5fC3p3fgV8cyGpLTo2LJzG1'),
+      staker
+    ),
+    new SPLStakePoolTracker(
+      'SolBlaze',
+      connection,
+      new PublicKey('stk9ApL5HeVAwPLr3TLhDXdZS8ptVu7zp6ov8HFDuMi'),
+      staker
+    ),
+    new SPLStakePoolTracker(
+      'DAOPool',
+      connection,
+      new PublicKey('7ge2xKsZXmqPxa3YmXxXmzCp9Hc2ezrTxh6PECaxCwrL'),
+      staker
+    ),
+    // new SPLStakePoolTracker(
+    //   'Socean',
+    //   connection,
+    //   new PublicKey('5oc4nmbNTda9fx8Tw57ShLD132aqDK65vuHH4RU1K4LZ'),
+    //   staker
+    // ),
+    // new SPLStakePoolTracker(
+    //   'Everstake',
+    //   connection,
+    //   new PublicKey('GUAMR8ciiaijraJeLDEDrFVaueLm9YzWWY9R7CBPL9rA'),
+    //   staker
+    // ),
     new SPLStakePoolTracker(
       'Jito',
       connection,

@@ -50,6 +50,7 @@ jobs:
     - name: Get prices
       env:
         WALLET: ${{ secrets.WALLET }}
+        RPC_URL: ${{ secrets.RPC_URL }}
       run: ./update-prices.bash
 
     - name: Prune prices
