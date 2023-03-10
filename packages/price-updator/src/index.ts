@@ -17,7 +17,7 @@ const getEnvVar = (key: string) => {
   const staker = Keypair.fromSecretKey(
     new Uint8Array(JSON.parse(getEnvVar('WALLET')))
   );
-  const clusterUrl = 'http://api.mainnet-beta.solana.com';
+  const clusterUrl = getEnvVar('RPC_URL');
   const connection = new Connection(clusterUrl);
   const {epoch} = await connection.getEpochInfo();
   process.stdout.write(`epoch ${epoch}\n`);
@@ -52,18 +52,18 @@ const getEnvVar = (key: string) => {
       new PublicKey('7ge2xKsZXmqPxa3YmXxXmzCp9Hc2ezrTxh6PECaxCwrL'),
       staker
     ),
-    new SPLStakePoolTracker(
-      'Socean',
-      connection,
-      new PublicKey('5oc4nmbNTda9fx8Tw57ShLD132aqDK65vuHH4RU1K4LZ'),
-      staker
-    ),
-    new SPLStakePoolTracker(
-      'Everstake',
-      connection,
-      new PublicKey('GUAMR8ciiaijraJeLDEDrFVaueLm9YzWWY9R7CBPL9rA'),
-      staker
-    ),
+    // new SPLStakePoolTracker(
+    //   'Socean',
+    //   connection,
+    //   new PublicKey('5oc4nmbNTda9fx8Tw57ShLD132aqDK65vuHH4RU1K4LZ'),
+    //   staker
+    // ),
+    // new SPLStakePoolTracker(
+    //   'Everstake',
+    //   connection,
+    //   new PublicKey('GUAMR8ciiaijraJeLDEDrFVaueLm9YzWWY9R7CBPL9rA'),
+    //   staker
+    // ),
     new SPLStakePoolTracker(
       'Jito',
       connection,
