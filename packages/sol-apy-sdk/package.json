@@ -2,7 +2,7 @@
     "author": {
         "name": "Jan Legner"
     },
-    "version": "1.0.5",
+    "version": "1.0.6",
     "main": "index.js",
     "types": "./index.d.ts",
     "license": "UNLICENCED",
