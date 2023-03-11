@@ -25,13 +25,13 @@ const getEnvVar = (key: string) => {
     new SPLStakePoolTracker(
       'Cogent',
       connection,
-      new PublicKey('Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb'),
+      new PublicKey('CgntPoLka5pD5fesJYhGmUCF8KU1QS1ZmZiuAuMZr2az'),
       staker
     ),
     new SPLStakePoolTracker(
       'Laine',
       connection,
-      new PublicKey('Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb'),
+      new PublicKey('2qyEeSAWKfU18AFthrF7JA8z8ZCi1yt76Tqs917vwQTV'),
       staker
     ),
     new SPLStakePoolTracker(
