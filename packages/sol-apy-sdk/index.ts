@@ -26,6 +26,13 @@ export type PriceRecord = {
   price: number;
 };
 
+export type ApyCalcResult = {
+  timestampStart: number;
+  timestampEnd: number;
+  epochs: number;
+  apy: number;
+};
+
 export const parsePriceRecordsFromCSV = async (
   csv: Readable
 ): Promise<PriceRecord[]> => {
@@ -67,7 +74,7 @@ export const fetchAndParsePricesCsv = async (url: string) => {
 export const calcAverageApy = (
   priceRecords: PriceRecord[],
   epochs = DEFAULT_EPOCHS
-): number | null => {
+): ApyCalcResult | null => {
   priceRecords.sort((a, b) => b.timestamp - a.timestamp);
 
   if (priceRecords.length <= 1) {
@@ -82,11 +89,12 @@ export const calcAverageApy = (
 
   let timestampStart = timestampEnd;
   let priceStart = priceEnd;
+  let epochStart = epochEnd;
 
   for (const {timestamp, epoch, price} of priceRecords) {
     timestampStart = timestamp;
     priceStart = price;
-
+    epochStart = epoch;
     if (epochEnd - epoch >= epochs) {
       break;
     }
@@ -100,5 +108,10 @@ export const calcAverageApy = (
     return null;
   }
 
-  return priceChange ** (millisecondsInAYear / deltaMilliseconds) - 1;
+  return {
+    apy: priceChange ** (millisecondsInAYear / deltaMilliseconds) - 1,
+    epochs: epochEnd - epochStart,
+    timestampStart: timestampStart,
+    timestampEnd: timestampEnd,
+  };
 };
