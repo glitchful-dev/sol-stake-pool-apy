@@ -18,7 +18,16 @@ function prune_db {
             print $0
         }
         previous = current
-    }' "$tmp_file" > "$db_file"
+    }' "$tmp_file" | awk -F , '{
+        current_epoch = $2
+        if (current_epoch != previous_epoch && previous_record) {
+            print previous_record
+        }
+        previous_epoch = current_epoch
+        previous_record = $0
+    } END {
+      print previous_record
+    }' > "$db_file"
     rm "$tmp_file"
 }
 
