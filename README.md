@@ -36,3 +36,8 @@ This SDK can fetch the contents of these CSV files and calculate APY based on th
 The data is collected at the same time for all target stake pools.
 The SDK calculates the APY in the same way for everyone.
 This ensures fairness for stake pool users who are then given an opportunity to compare how stake pools perform.
+
+## Supported stakepools 
+The following stakepools' APY can be obtained through this SDK: 
+
+mSOL / stSOL / jitoSOL / bSOL / scnSOL / eSOL / LaineSOL / CgntSOL / daoSOL
