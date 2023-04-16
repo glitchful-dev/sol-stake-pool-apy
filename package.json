@@ -4,6 +4,7 @@
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "start": "NODE_PATH=packages/price-updator/node_modules node build/packages/price-updator/src/index.js",
+        "test": "cd packages/sol-apy-sdk && pnpm run test",
         "lint": "gts lint",
         "clean": "gts clean",
         "compile": "tsc",

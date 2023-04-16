@@ -115,3 +115,56 @@ export const calcAverageApy = (
     timestampEnd: timestampEnd,
   };
 };
+
+export const calcAverageApyList = (
+  priceRecords: PriceRecord[],
+  epochs = DEFAULT_EPOCHS
+): ApyCalcResult[] => {
+  priceRecords.sort((a, b) => b.timestamp - a.timestamp);
+
+  const results: ApyCalcResult[] = [];
+  let indexStart = 0;
+  let indexEnd = 0;
+
+  while (indexEnd < priceRecords.length) {
+    const lastPriceRecord = priceRecords[indexEnd];
+    const epochEnd = lastPriceRecord.epoch;
+    const timestampEnd = lastPriceRecord.timestamp;
+    const priceEnd = lastPriceRecord.price;
+
+    while (indexStart < priceRecords.length) {
+      const {epoch} = priceRecords[indexStart];
+      if (epochEnd - epoch >= epochs) {
+        break;
+      }
+      indexStart++;
+    }
+    if (indexStart === priceRecords.length) {
+      break;
+    }
+
+    const {
+      timestamp: timestampStart,
+      epoch: epochStart,
+      price: priceStart,
+    } = priceRecords[indexStart];
+
+    const deltaMilliseconds = timestampEnd - timestampStart;
+    const priceChange = priceEnd / priceStart;
+    const millisecondsInAYear = 365.25 * 24 * 3600 * 1000;
+
+    if (deltaMilliseconds === 0) {
+      break;
+    }
+
+    results.push({
+      apy: priceChange ** (millisecondsInAYear / deltaMilliseconds) - 1,
+      epochs: epochEnd - epochStart,
+      timestampStart: timestampStart,
+      timestampEnd: timestampEnd,
+    });
+    indexEnd++;
+  }
+
+  return results;
+};
