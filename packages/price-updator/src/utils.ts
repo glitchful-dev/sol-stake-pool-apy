@@ -1,5 +1,5 @@
-import {Connection, PublicKey, SolanaJSONRPCError} from '@solana/web3.js';
-import {ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID} from '@solana/spl-token';
+import {BN} from '@marinade.finance/marinade-ts-sdk';
+import {StakePool} from '@solana/spl-stake-pool';
 
 export class Logger {
   private now = () => new Date().toISOString();
@@ -31,32 +31,44 @@ export class Logger {
     );
 }
 
-export const findAssociatedTokenAddress = (
-  walletAddress: PublicKey,
-  tokenMintAddress: PublicKey
-): PublicKey =>
-  PublicKey.findProgramAddressSync(
-    [
-      walletAddress.toBuffer(),
-      TOKEN_PROGRAM_ID.toBuffer(),
-      tokenMintAddress.toBuffer(),
-    ],
-    ASSOCIATED_TOKEN_PROGRAM_ID
-  )[0];
+const SOL_DECIMALS = 9;
 
-export const getAssociatedTokenBalance = async (
-  connection: Connection,
-  tokenAccount: PublicKey
-): Promise<bigint> => {
-  try {
-    const balanceResponse = await connection.getTokenAccountBalance(
-      tokenAccount
-    );
-    return BigInt(balanceResponse.value.amount);
-  } catch (err) {
-    if (err instanceof SolanaJSONRPCError && err.code === -32602) {
-      return BigInt(0);
-    }
-    throw err;
+export function withDecimalPoint(bn: BN, decimals: number): string {
+  const s = bn.toString().padStart(decimals + 1, '0');
+  const l = s.length;
+  return s.slice(0, l - decimals) + '.' + s.slice(-decimals);
+}
+
+export function tokenBalanceToNumber(bn: BN, decimals: number): number {
+  return Number(withDecimalPoint(bn, decimals));
+}
+
+export function lamportsToSol(bn: BN): number {
+  return tokenBalanceToNumber(bn, SOL_DECIMALS);
+}
+
+export function solToLamports(amountSol: number): BN {
+  return new BN(amountSol.toFixed(SOL_DECIMALS).replace('.', ''));
+}
+
+export function divideBnToNumber(numerator: BN, denominator: BN): number {
+  if (denominator.isZero()) {
+    return 0;
   }
-};
+  const quotient = numerator.div(denominator).toNumber();
+  const rem = numerator.umod(denominator);
+  const gcd = rem.gcd(denominator);
+  return quotient + rem.div(gcd).toNumber() / denominator.div(gcd).toNumber();
+}
+
+export function calcLamportsWithdrawAmount(
+  stakePool: StakePool,
+  poolTokens: BN
+): number {
+  const numerator = poolTokens.mul(stakePool.totalLamports);
+  const denominator = stakePool.poolTokenSupply;
+  if (numerator.lt(denominator)) {
+    return 0;
+  }
+  return divideBnToNumber(numerator, denominator);
+}
