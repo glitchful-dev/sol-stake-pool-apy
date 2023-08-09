@@ -1,4 +1,4 @@
-import {Connection, PublicKey, Keypair} from '@solana/web3.js';
+import {Connection, PublicKey} from '@solana/web3.js';
 import {SPLStakePoolTracker} from './trackers/SPLStakePoolTracker';
 import {StakePoolTracker} from './trackers/StakePoolTracker';
 import {SolidoTracker} from './trackers/SolidoTracker';
@@ -14,9 +14,6 @@ const getEnvVar = (key: string) => {
 
 (async () => {
   const logger = new Logger();
-  const staker = Keypair.fromSecretKey(
-    new Uint8Array(JSON.parse(getEnvVar('WALLET')))
-  );
   const clusterUrl = getEnvVar('RPC_URL');
   const connection = new Connection(clusterUrl);
   const {epoch} = await connection.getEpochInfo();
@@ -25,53 +22,45 @@ const getEnvVar = (key: string) => {
     new SPLStakePoolTracker(
       'Cogent',
       connection,
-      new PublicKey('CgntPoLka5pD5fesJYhGmUCF8KU1QS1ZmZiuAuMZr2az'),
-      staker
+      new PublicKey('CgntPoLka5pD5fesJYhGmUCF8KU1QS1ZmZiuAuMZr2az')
     ),
     new SPLStakePoolTracker(
       'Laine',
       connection,
-      new PublicKey('2qyEeSAWKfU18AFthrF7JA8z8ZCi1yt76Tqs917vwQTV'),
-      staker
+      new PublicKey('2qyEeSAWKfU18AFthrF7JA8z8ZCi1yt76Tqs917vwQTV')
     ),
     new SPLStakePoolTracker(
       'JPool',
       connection,
-      new PublicKey('CtMyWsrUtAwXWiGr9WjHT5fC3p3fgV8cyGpLTo2LJzG1'),
-      staker
+      new PublicKey('CtMyWsrUtAwXWiGr9WjHT5fC3p3fgV8cyGpLTo2LJzG1')
     ),
     new SPLStakePoolTracker(
       'SolBlaze',
       connection,
-      new PublicKey('stk9ApL5HeVAwPLr3TLhDXdZS8ptVu7zp6ov8HFDuMi'),
-      staker
+      new PublicKey('stk9ApL5HeVAwPLr3TLhDXdZS8ptVu7zp6ov8HFDuMi')
     ),
     new SPLStakePoolTracker(
       'DAOPool',
       connection,
-      new PublicKey('7ge2xKsZXmqPxa3YmXxXmzCp9Hc2ezrTxh6PECaxCwrL'),
-      staker
+      new PublicKey('7ge2xKsZXmqPxa3YmXxXmzCp9Hc2ezrTxh6PECaxCwrL')
     ),
-    // new SPLStakePoolTracker(
-    //   'Socean',
-    //   connection,
-    //   new PublicKey('5oc4nmbNTda9fx8Tw57ShLD132aqDK65vuHH4RU1K4LZ'),
-    //   staker
-    // ),
-    // new SPLStakePoolTracker(
-    //   'Everstake',
-    //   connection,
-    //   new PublicKey('GUAMR8ciiaijraJeLDEDrFVaueLm9YzWWY9R7CBPL9rA'),
-    //   staker
-    // ),
+    new SPLStakePoolTracker(
+      'Socean',
+      connection,
+      new PublicKey('5oc4nmbNTda9fx8Tw57ShLD132aqDK65vuHH4RU1K4LZ')
+    ),
+    new SPLStakePoolTracker(
+      'Everstake',
+      connection,
+      new PublicKey('GUAMR8ciiaijraJeLDEDrFVaueLm9YzWWY9R7CBPL9rA')
+    ),
     new SPLStakePoolTracker(
       'Jito',
       connection,
-      new PublicKey('Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb'),
-      staker
+      new PublicKey('Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb')
     ),
-    new SolidoTracker(connection, staker),
-    new MarinadeTracker(connection, staker),
+    new SolidoTracker(connection),
+    new MarinadeTracker(connection),
   ];
 
   for (const tracker of trackers) {
