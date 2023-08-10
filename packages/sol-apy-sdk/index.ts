@@ -1,7 +1,7 @@
 import fetchPonyfill from 'fetch-ponyfill';
-import {Readable} from 'stream';
-import {parse} from 'csv-parse';
-const {fetch} = fetchPonyfill();
+import { Readable } from 'stream';
+import { parse } from 'csv-parse';
+const { fetch } = fetchPonyfill();
 
 const DATA_SOURCE_BASE =
   'https://raw.githubusercontent.com/glitchful-dev/sol-stake-pool-apy/master/db/';
@@ -36,15 +36,15 @@ export type ApyCalcResult = {
 export const parsePriceRecordsFromCSV = async (
   csv: Readable
 ): Promise<PriceRecord[]> => {
-  const csvParser = parse({delimiter: ',', columns: true});
+  const csvParser = parse({ delimiter: ',', columns: true });
   const records = [];
   for await (const row of csv.pipe(csvParser)) {
-    const {timestamp, epoch, price} = row;
+    const { timestamp, epoch, price } = row;
     if (!timestamp || !epoch || !price) {
       throw new Error('Columns "timestamp", "epoch", "price" must be present!');
     }
     const record = {
-      timestamp: new Date(timestamp).getTime(),
+      timestamp: Math.round(new Date(timestamp).getTime() / 1e3),
       epoch: Number(epoch),
       price: Number(price),
     };
@@ -71,100 +71,96 @@ export const fetchAndParsePricesCsv = async (url: string) => {
   return prices;
 };
 
-export const calcAverageApy = (
-  priceRecords: PriceRecord[],
-  epochs = DEFAULT_EPOCHS
-): ApyCalcResult | null => {
+const enum SECONDS_PER {
+  DAY =  24 * 3600,
+  YEAR = 365.25 * 24 * 3600
+}
+
+export const enum PERIOD {
+  DAYS_7 = 7 * SECONDS_PER.DAY,
+  DAYS_14 = 14 * SECONDS_PER.DAY,
+  DAYS_30 = 30 * SECONDS_PER.DAY,
+  DAYS_90 = 90 * SECONDS_PER.DAY,
+  DAYS_365 = 365 * SECONDS_PER.DAY,
+}
+
+type PriceRange = {
+  startPrice: number
+  endPrice: number
+  startTimestamp: number
+  endTimestamp: number
+  startEpoch: number
+  endEpoch: number
+}
+
+export const getPriceRange = (priceRecords: PriceRecord[], startTimestamp: number, endTimestamp: number): PriceRange | null => {
   priceRecords.sort((a, b) => b.timestamp - a.timestamp);
 
-  if (priceRecords.length <= 1) {
-    return null;
-  }
+  let earliestRecord: PriceRecord | null = null;
+  let latestRecord: PriceRecord | null = null;
 
-  const [lastPriceRecord] = priceRecords;
-
-  const epochEnd = lastPriceRecord.epoch;
-  const timestampEnd = lastPriceRecord.timestamp;
-  const priceEnd = lastPriceRecord.price;
-
-  let timestampStart = timestampEnd;
-  let priceStart = priceEnd;
-  let epochStart = epochEnd;
-
-  for (const {timestamp, epoch, price} of priceRecords) {
-    timestampStart = timestamp;
-    priceStart = price;
-    epochStart = epoch;
-    if (epochEnd - epoch >= epochs) {
-      break;
+  for (const record of priceRecords) {
+    if (record.timestamp >= startTimestamp) {
+      earliestRecord = record;
+    }
+    if (!latestRecord && record.timestamp <= endTimestamp) {
+      latestRecord = record;
+    }
+    if (record.timestamp < startTimestamp) {
+      break
     }
   }
 
-  const deltaMilliseconds = timestampEnd - timestampStart;
-  const priceChange = priceEnd / priceStart;
-  const millisecondsInAYear = 365.25 * 24 * 3600 * 1000;
+  if (!earliestRecord || !latestRecord) {
+    return null
+  }
 
-  if (deltaMilliseconds === 0) {
-    return null;
+  if (earliestRecord.timestamp >= latestRecord.timestamp) {
+    return null
   }
 
   return {
-    apy: priceChange ** (millisecondsInAYear / deltaMilliseconds) - 1,
-    epochs: epochEnd - epochStart,
-    timestampStart: timestampStart,
-    timestampEnd: timestampEnd,
-  };
-};
+    startPrice: earliestRecord.price,
+    endPrice: latestRecord.price,
+    startTimestamp: earliestRecord.timestamp,
+    endTimestamp: latestRecord.timestamp,
+    startEpoch: earliestRecord.epoch,
+    endEpoch: latestRecord.epoch,
+  }
+}
 
-export const calcAverageApyList = (
-  priceRecords: PriceRecord[],
-  epochs = DEFAULT_EPOCHS
-): ApyCalcResult[] => {
-  priceRecords.sort((a, b) => b.timestamp - a.timestamp);
+export const getPriceRangeFromDates = (priceRecords: PriceRecord[], start: Date, end: Date) => getPriceRange(priceRecords, Math.round(start.getTime() / 1e3), Math.round(end.getTime() / 1e3))
 
-  const results: ApyCalcResult[] = [];
-  let indexStart = 0;
-  let indexEnd = 0;
+export const getPriceRangeFromPeriod = (priceRecords: PriceRecord[], periodSeconds = PERIOD.DAYS_30, end = new Date()) => getPriceRangeFromDates(priceRecords, new Date(end.getTime() - periodSeconds * 1e3), end)
 
-  while (indexEnd < priceRecords.length) {
-    const lastPriceRecord = priceRecords[indexEnd];
-    const epochEnd = lastPriceRecord.epoch;
-    const timestampEnd = lastPriceRecord.timestamp;
-    const priceEnd = lastPriceRecord.price;
-
-    while (indexStart < priceRecords.length) {
-      const {epoch} = priceRecords[indexStart];
-      if (epochEnd - epoch >= epochs) {
-        break;
-      }
-      indexStart++;
-    }
-    if (indexStart === priceRecords.length) {
-      break;
-    }
-
-    const {
-      timestamp: timestampStart,
-      epoch: epochStart,
-      price: priceStart,
-    } = priceRecords[indexStart];
-
-    const deltaMilliseconds = timestampEnd - timestampStart;
-    const priceChange = priceEnd / priceStart;
-    const millisecondsInAYear = 365.25 * 24 * 3600 * 1000;
-
-    if (deltaMilliseconds === 0) {
-      break;
-    }
-
-    results.push({
-      apy: priceChange ** (millisecondsInAYear / deltaMilliseconds) - 1,
-      epochs: epochEnd - epochStart,
-      timestampStart: timestampStart,
-      timestampEnd: timestampEnd,
-    });
-    indexEnd++;
+export type Yield = { apy: number; apr: number }
+export const calcYield = (priceRange: PriceRange): Yield => {
+  if (priceRange.startPrice <= 0 || priceRange.endPrice <= 0) {
+    throw new Error('Prices must be positive numbers!')
   }
 
-  return results;
-};
+  const deltaSeconds = priceRange.endTimestamp - priceRange.startTimestamp
+  if (deltaSeconds <= 0) {
+    throw new Error('Start timestamp must be before end timestamp!')
+  }
+
+  const periodYield = priceRange.endPrice / priceRange.startPrice
+  const epochsPerPeriod = priceRange.endEpoch - priceRange.startEpoch
+  if (deltaSeconds <= 0) {
+    throw new Error('At least 1 epoch must be in the range!')
+  }
+
+  const averageEpochDuration = deltaSeconds / epochsPerPeriod
+  const epochsPerYear = SECONDS_PER.YEAR / averageEpochDuration
+  const periodsPerYear = SECONDS_PER.YEAR / deltaSeconds
+
+  const averageEpochRate = periodYield ** (1 / epochsPerPeriod) - 1
+
+  const apy = (periodYield ** periodsPerYear) - 1
+  const apr = averageEpochRate * epochsPerYear
+
+  return {
+    apy,
+    apr,
+  }
+}

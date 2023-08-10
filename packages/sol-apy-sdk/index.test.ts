@@ -1,6 +1,6 @@
-import {describe, it, expect} from '@jest/globals';
-import {Readable} from 'stream';
-import {calcAverageApy, calcAverageApyList, parsePriceRecordsFromCSV} from '.';
+import { describe, it, expect } from '@jest/globals';
+import { Readable } from 'stream';
+import { PERIOD, calcYield, getPriceRangeFromDates, getPriceRangeFromPeriod, parsePriceRecordsFromCSV } from '.';
 
 const PRICES_FIXTURE = `timestamp,epoch,price
 2023-02-16T20:00:00.000Z,412,1.0941210906569283
@@ -37,29 +37,113 @@ describe('APY SDK', () => {
       expect(prices).toMatchSnapshot();
     });
   });
-  describe('calcAverageApy', () => {
-    it('calculates average APY over past 10 epochs', async () => {
-      const prices = await parsePriceRecordsFromCSV(
-        Readable.from(PRICES_FIXTURE)
-      );
-      const result = calcAverageApy(prices);
+  describe('calcYield', () => {
+    it('calculates APY and APR correctly', async () => {
+      const result = calcYield({
+        startPrice: 42,
+        endPrice: 42.0558847584553,
+        startTimestamp: 0,
+        endTimestamp: 586800,
+        startEpoch: 0,
+        endEpoch: 3,
+      });
 
       expect(result).toStrictEqual({
-        apy: 0.0674747747045612,
-        epochs: 10,
-        timestampEnd: 1680677756000,
-        timestampStart: 1678686963000,
+        apr: 0.07152624512579997,
+        apy: 0.07412931603353212,
       });
     });
-  });
-  describe('calcAverageApyList', () => {
-    it('calculates average APY over past 10 epochs at every epoch', async () => {
+    it('calculates APY and APR correctly', async () => {
+      const result = calcYield({
+        startPrice: 1,
+        endPrice: 1.00045,
+        startTimestamp: 0,
+        endTimestamp: 2 * 86400,
+        startEpoch: 0,
+        endEpoch: 1,
+      });
+
+      expect(result).toStrictEqual({
+        apr: 0.08218125000001122,
+        apy: 0.08563249816733087,
+      });
+    });
+    it('calculates APY and APR correctly', async () => {
       const prices = await parsePriceRecordsFromCSV(
         Readable.from(PRICES_FIXTURE)
       );
-      const result = calcAverageApyList(prices);
+      const priceRange = getPriceRangeFromPeriod(prices, PERIOD.DAYS_14, new Date('2023-04-05T06:55:56+00:00'))
+      expect(priceRange).toStrictEqual({
+        endEpoch: 432,
+        endPrice: 1.1032175661352648,
+        endTimestamp: 1680677756,
+        startEpoch: 426,
+        startPrice: 1.100526299299535,
+        startTimestamp: 1679490514,
+      })
 
-      expect(result).toMatchSnapshot();
+      const result = calcYield(priceRange!);
+      expect(result).toStrictEqual({
+        apr: 0.06493501845986677,
+        apy: 0.06707557862842384,
+      });
+      expect(result.apy).toBe((1.1032175661352648 / 1.100526299299535) ** ((365.25 * 86400) / (1680677756 - 1679490514)) - 1)
+    });
+  });
+  describe('getPriceRangeFromDates', () => {
+    it('finds correct price points', async () => {
+      const prices = await parsePriceRecordsFromCSV(
+        Readable.from(PRICES_FIXTURE)
+      );
+      const results = [
+        getPriceRangeFromDates(prices, new Date("2000-01-01"), new Date("2040-01-01")),
+        getPriceRangeFromDates(prices, new Date("2030-01-01"), new Date("2040-01-01")),
+        getPriceRangeFromDates(prices, new Date("2000-01-01"), new Date("2020-01-01")),
+        getPriceRangeFromDates(prices, new Date("2000-01-01"), new Date("2023-03-13T00:00:00Z")),
+        getPriceRangeFromDates(prices, new Date("2023-03-13T00:00:00Z"), new Date("2040-01-01")),
+        getPriceRangeFromDates(prices, new Date("2023-03-13T00:00:00Z"), new Date("2023-03-13T01:00:00Z")),
+        getPriceRangeFromDates(prices, new Date("2023-03-13T00:00:00Z"), new Date("2023-03-14T00:00:00Z")),
+        getPriceRangeFromDates(prices, new Date("2023-03-13T00:00:00Z"), new Date("2023-03-29T01:00:00Z")),
+      ];
+
+      expect(results).toStrictEqual([
+        {
+          endEpoch: 432,
+          endPrice: 1.1032175661352648,
+          endTimestamp: 1680677756,
+          startEpoch: 412,
+          startPrice: 1.0941210906569283,
+          startTimestamp: 1676577600,
+        },
+        null,
+        null,
+        {
+          endEpoch: 421,
+          endPrice: 1.0982106707479484,
+          endTimestamp: 1678485362,
+          startEpoch: 412,
+          startPrice: 1.0941210906569283,
+          startTimestamp: 1676577600,
+        },
+        {
+          endEpoch: 432,
+          endPrice: 1.1032175661352648,
+          endTimestamp: 1680677756,
+          startEpoch: 422,
+          startPrice: 1.0986825938727043,
+          startTimestamp: 1678686963,
+        },
+        null,
+        null,
+        {
+          endEpoch: 428,
+          endPrice: 1.101442255695231,
+          endTimestamp: 1679885774,
+          startEpoch: 422,
+          startPrice: 1.0986825938727043,
+          startTimestamp: 1678686963,
+        },
+      ]);
     });
   });
 });

@@ -1,204 +1,121 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`APY SDK calcAverageApyList ... 1`] = `
-[
-  {
-    "apy": 0.0674747747045612,
-    "epochs": 10,
-    "timestampEnd": 1680677756000,
-    "timestampStart": 1678686963000,
-  },
-  {
-    "apy": 0.06787565840858112,
-    "epochs": 10,
-    "timestampEnd": 1680479760000,
-    "timestampStart": 1678485362000,
-  },
-  {
-    "apy": 0.06850367466580853,
-    "epochs": 10,
-    "timestampEnd": 1680281781000,
-    "timestampStart": 1678294566000,
-  },
-  {
-    "apy": 0.06199060334039053,
-    "epochs": 10,
-    "timestampEnd": 1680278181000,
-    "timestampStart": 1678294566000,
-  },
-  {
-    "apy": 0.06840591747460634,
-    "epochs": 10,
-    "timestampEnd": 1680083768000,
-    "timestampStart": 1678078467000,
-  },
-  {
-    "apy": 0.06792949615126953,
-    "epochs": 10,
-    "timestampEnd": 1679885774000,
-    "timestampStart": 1677876870000,
-  },
-  {
-    "apy": 0.0676731803502626,
-    "epochs": 10,
-    "timestampEnd": 1679691359000,
-    "timestampStart": 1677676365000,
-  },
-  {
-    "apy": 0.06706753974588486,
-    "epochs": 10,
-    "timestampEnd": 1679490514000,
-    "timestampStart": 1677463997000,
-  },
-  {
-    "apy": 0.06415855236734913,
-    "epochs": 10,
-    "timestampEnd": 1679291769000,
-    "timestampStart": 1677185655000,
-  },
-  {
-    "apy": 0.06378639701836697,
-    "epochs": 10,
-    "timestampEnd": 1679097363000,
-    "timestampStart": 1676985092000,
-  },
-  {
-    "apy": 0.0582084385130377,
-    "epochs": 10,
-    "timestampEnd": 1679093777000,
-    "timestampStart": 1676985092000,
-  },
-  {
-    "apy": 0.062491114287018146,
-    "epochs": 10,
-    "timestampEnd": 1678892174000,
-    "timestampStart": 1676734089247,
-  },
-  {
-    "apy": 0.06422106873309597,
-    "epochs": 10,
-    "timestampEnd": 1678686963000,
-    "timestampStart": 1676577600000,
-  },
-]
-`;
-
 exports[`APY SDK parsePriceRecordsFromCSV parses CSV and returns price records 1`] = `
 [
   {
     "epoch": 412,
     "price": 1.0941210906569283,
-    "timestamp": 1676577600000,
+    "timestamp": 1676577600,
   },
   {
     "epoch": 413,
     "price": 1.0945924869715526,
-    "timestamp": 1676734089247,
+    "timestamp": 1676734089,
   },
   {
     "epoch": 414,
     "price": 1.0950583993877852,
-    "timestamp": 1676985092000,
+    "timestamp": 1676985092,
   },
   {
     "epoch": 415,
     "price": 1.0955070615234903,
-    "timestamp": 1677185655000,
+    "timestamp": 1677185655,
   },
   {
     "epoch": 416,
     "price": 1.0959482337882382,
-    "timestamp": 1677463997000,
+    "timestamp": 1677463997,
   },
   {
     "epoch": 417,
     "price": 1.096392841238896,
-    "timestamp": 1677676365000,
+    "timestamp": 1677676365,
   },
   {
     "epoch": 418,
     "price": 1.096843739456418,
-    "timestamp": 1677876870000,
+    "timestamp": 1677876870,
   },
   {
     "epoch": 419,
     "price": 1.0972802712441718,
-    "timestamp": 1678078467000,
+    "timestamp": 1678078467,
   },
   {
     "epoch": 420,
     "price": 1.0977456564567272,
-    "timestamp": 1678294566000,
+    "timestamp": 1678294566,
   },
   {
     "epoch": 421,
     "price": 1.0982106707479484,
-    "timestamp": 1678485362000,
+    "timestamp": 1678485362,
   },
   {
     "epoch": 422,
     "price": 1.0986825938727043,
-    "timestamp": 1678686963000,
+    "timestamp": 1678686963,
   },
   {
     "epoch": 423,
     "price": 1.0991392944646632,
-    "timestamp": 1678892174000,
+    "timestamp": 1678892174,
   },
   {
     "epoch": 424,
     "price": 1.0992061116862286,
-    "timestamp": 1679093777000,
+    "timestamp": 1679093777,
   },
   {
     "epoch": 424,
     "price": 1.0996000494015115,
-    "timestamp": 1679097363000,
+    "timestamp": 1679097363,
   },
   {
     "epoch": 425,
     "price": 1.1000629805857518,
-    "timestamp": 1679291769000,
+    "timestamp": 1679291769,
   },
   {
     "epoch": 426,
     "price": 1.100526299299535,
-    "timestamp": 1679490514000,
+    "timestamp": 1679490514,
   },
   {
     "epoch": 427,
     "price": 1.1009865561790546,
-    "timestamp": 1679691359000,
+    "timestamp": 1679691359,
   },
   {
     "epoch": 428,
     "price": 1.101442255695231,
-    "timestamp": 1679885774000,
+    "timestamp": 1679885774,
   },
   {
     "epoch": 429,
     "price": 1.1019035790931255,
-    "timestamp": 1680083768000,
+    "timestamp": 1680083768,
   },
   {
     "epoch": 430,
     "price": 1.1019035790931255,
-    "timestamp": 1680278181000,
+    "timestamp": 1680278181,
   },
   {
     "epoch": 430,
     "price": 1.102335473523167,
-    "timestamp": 1680281781000,
+    "timestamp": 1680281781,
   },
   {
     "epoch": 431,
     "price": 1.1027780885651493,
-    "timestamp": 1680479760000,
+    "timestamp": 1680479760,
   },
   {
     "epoch": 432,
     "price": 1.1032175661352648,
-    "timestamp": 1680677756000,
+    "timestamp": 1680677756,
   },
 ]
 `;
