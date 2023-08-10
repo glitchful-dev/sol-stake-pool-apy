@@ -14,12 +14,12 @@ import { fetchAndParsePricesCsv, calcAverageApy, DATA_SOURCE } from '@glitchful-
 
 (async () => {
   const prices = await fetchAndParsePricesCsv(DATA_SOURCE.MARINADE_CSV)
-  const result = calcAverageApy(prices)
+  const priceRange = getPriceRangeFromPeriod(prices, PERIOD.DAYS_14) // may be null if the price range cannot be calculated
 
-  console.log('apy: ', result?.apy);                        // 0.06422106873309597 => 6.422 %
-  console.log('timestampStart: ', result?.timestampStart);  // 1676577600000 => Thursday, February 16, 2023 8:00:00 PM GMT+00:00
-  console.log('timestampEnd: ', result?.timestampEnd);      // 1678686963000 => Monday, March 13, 2023 5:56:03 AM GMT+00:00
-  console.log('epochs used for calc: ', result?.epochs);    // 10
+  const result = calcYield(priceRange)
+
+  console.log('APR: ', result?.apr) // 0.06493501845986677 => 6.49 %
+  console.log('APY: ', result?.apy) // 0.06707557862842384 => 6.71 %
 })()
 ```
 
