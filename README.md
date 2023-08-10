@@ -10,7 +10,7 @@ pnpm install @glitchful-dev/sol-apy-sdk
 ```
 
 ```typescript
-import { fetchAndParsePricesCsv, calcAverageApy, DATA_SOURCE } from '@glitchful-dev/sol-apy-sdk'
+import { fetchAndParsePricesCsv, getPriceRangeFromPeriod, calcYield, DATA_SOURCE, PERIOD } from '@glitchful-dev/sol-apy-sdk'
 
 (async () => {
   const prices = await fetchAndParsePricesCsv(DATA_SOURCE.MARINADE_CSV)
