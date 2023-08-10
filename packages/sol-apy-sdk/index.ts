@@ -72,11 +72,11 @@ export const fetchAndParsePricesCsv = async (url: string) => {
 };
 
 const enum SECONDS_PER {
-  DAY =  24 * 3600,
+  DAY = 24 * 3600,
   YEAR = 365.25 * 24 * 3600
 }
 
-export const enum PERIOD {
+export enum PERIOD {
   DAYS_7 = 7 * SECONDS_PER.DAY,
   DAYS_14 = 14 * SECONDS_PER.DAY,
   DAYS_30 = 30 * SECONDS_PER.DAY,
