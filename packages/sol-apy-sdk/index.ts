@@ -14,6 +14,7 @@ export const DATA_SOURCE = {
   SOCEAN_CSV: `${DATA_SOURCE_BASE}socean.csv`,
   JPOOL_CSV: `${DATA_SOURCE_BASE}jpool.csv`,
   SOLBLAZE_CSV: `${DATA_SOURCE_BASE}solblaze.csv`,
+  LST_CSV: `${DATA_SOURCE_BASE}lst.csv`,
   LIDO_CSV: `${DATA_SOURCE_BASE}lido.csv`,
   MARINADE_CSV: `${DATA_SOURCE_BASE}marinade.csv`,
 };
