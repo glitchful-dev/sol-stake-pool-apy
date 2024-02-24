@@ -17,6 +17,7 @@ export const DATA_SOURCE = {
   LST_CSV: `${DATA_SOURCE_BASE}lst.csv`,
   LIDO_CSV: `${DATA_SOURCE_BASE}lido.csv`,
   MARINADE_CSV: `${DATA_SOURCE_BASE}marinade.csv`,
+  EDGEVANA_CSV: `${DATA_SOURCE_BASE}edgevana.csv`,
 };
 
 const DEFAULT_EPOCHS = 10;

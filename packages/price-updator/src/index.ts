@@ -64,6 +64,11 @@ const getEnvVar = (key: string) => {
       connection,
       new PublicKey('DqhH94PjkZsjAqEze2BEkWhFQJ6EyU6MdtMphMgnXqeK')
     ),
+    new SPLStakePoolTracker(
+      'Edgevana',
+      connection,
+      new PublicKey('edgejNWAqkePLpi5sHRxT9vHi7u3kSHP9cocABPKiWZ')
+    ),
     new SolidoTracker(connection),
     new MarinadeTracker(connection),
   ];
