@@ -51,6 +51,7 @@ update_db './db/socean.csv' Socean
 update_db './db/jito.csv' Jito
 update_db './db/lst.csv' LST
 update_db './db/edgevana.csv' Edgevana
+update_db './db/HUB.csv' Hub
 update_db './db/lido.csv' Lido
 update_db './db/marinade.csv' Marinade
 
