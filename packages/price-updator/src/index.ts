@@ -45,9 +45,9 @@ const getEnvVar = (key: string) => {
       new PublicKey('7ge2xKsZXmqPxa3YmXxXmzCp9Hc2ezrTxh6PECaxCwrL')
     ),
     new SPLStakePoolTracker(
-      'Socean',
+      'INF',
       connection,
-      new PublicKey('5oc4nmbNTda9fx8Tw57ShLD132aqDK65vuHH4RU1K4LZ')
+      new PublicKey('5oVNBeEEQvYi1cX3ir8Dx5n1P7pdxydbGF2X4TxVusJm')
     ),
     new SPLStakePoolTracker(
       'Everstake',

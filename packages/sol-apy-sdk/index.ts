@@ -11,7 +11,7 @@ export const DATA_SOURCE = {
   COGENT_CSV: `${DATA_SOURCE_BASE}cogent.csv`,
   DAOPOOL_CSV: `${DATA_SOURCE_BASE}daopool.csv`,
   EVERSTAKE_CSV: `${DATA_SOURCE_BASE}everstake.csv`,
-  SOCEAN_CSV: `${DATA_SOURCE_BASE}socean.csv`,
+  INF_CSV: `${DATA_SOURCE_BASE}socean.csv`,
   JPOOL_CSV: `${DATA_SOURCE_BASE}jpool.csv`,
   SOLBLAZE_CSV: `${DATA_SOURCE_BASE}solblaze.csv`,
   LST_CSV: `${DATA_SOURCE_BASE}lst.csv`,

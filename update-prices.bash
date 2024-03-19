@@ -47,7 +47,7 @@ update_db './db/everstake.csv' Everstake
 update_db './db/solblaze.csv' SolBlaze
 update_db './db/daopool.csv' DAOPool
 update_db './db/jpool.csv' JPool
-update_db './db/socean.csv' Socean
+update_db './db/socean.csv' INF
 update_db './db/jito.csv' Jito
 update_db './db/lst.csv' LST
 update_db './db/edgevana.csv' Edgevana
