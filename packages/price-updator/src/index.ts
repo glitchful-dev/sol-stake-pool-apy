@@ -44,11 +44,12 @@ const getEnvVar = (key: string) => {
       connection,
       new PublicKey('7ge2xKsZXmqPxa3YmXxXmzCp9Hc2ezrTxh6PECaxCwrL')
     ),
-    new SPLStakePoolTracker(
-      'INF',
-      connection,
-      new PublicKey('5oVNBeEEQvYi1cX3ir8Dx5n1P7pdxydbGF2X4TxVusJm')
-    ),
+    // Socean/Inf no longer uses SPL Contract. Until they will provide a way to compute the price, it will stay disabled
+    // new SPLStakePoolTracker(
+    //   'INF',
+    //   connection,
+    //   new PublicKey('5oVNBeEEQvYi1cX3ir8Dx5n1P7pdxydbGF2X4TxVusJm')
+    // ),
     new SPLStakePoolTracker(
       'Everstake',
       connection,
