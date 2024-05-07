@@ -19,6 +19,7 @@ export const DATA_SOURCE = {
   MARINADE_CSV: `${DATA_SOURCE_BASE}marinade.csv`,
   EDGEVANA_CSV: `${DATA_SOURCE_BASE}edgevana.csv`,
   HUB_CSV: `${DATA_SOURCE_BASE}hub.csv`,
+  PWRSOL_CSV: `${DATA_SOURCE_BASE}pwrsol.csv`,
 };
 
 const DEFAULT_EPOCHS = 10;

@@ -54,5 +54,6 @@ update_db './db/edgevana.csv' Edgevana
 update_db './db/hub.csv' Hub
 update_db './db/lido.csv' Lido
 update_db './db/marinade.csv' Marinade
+update_db './db/pwrsol.csv' PwrSOL
 
 rm "$result_file"
