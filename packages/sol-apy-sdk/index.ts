@@ -20,6 +20,7 @@ export const DATA_SOURCE = {
   EDGEVANA_CSV: `${DATA_SOURCE_BASE}edgevana.csv`,
   HUB_CSV: `${DATA_SOURCE_BASE}hub.csv`,
   PWRSOL_CSV: `${DATA_SOURCE_BASE}pwrsol.csv`,
+  PICOSOL_CSV: `${DATA_SOURCE_BASE}picosol.csv`,
 };
 
 const DEFAULT_EPOCHS = 10;
