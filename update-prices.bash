@@ -56,5 +56,6 @@ update_db './db/lido.csv' Lido
 update_db './db/marinade.csv' Marinade
 update_db './db/pwrsol.csv' PwrSOL
 update_db './db/picosol.csv' PicoSOL
+update_db './db/vsol.csv' vSOL
 
 rm "$result_file"
