@@ -19,43 +19,29 @@ then
     exit 1
 fi
 
-function update_db {
-    db_file="$1"
-    search_exp="$2"
+# Define a regex pattern to match the "epoch" line
+EPOCH_PATTERN="^epoch [0-9]+$"
+# Set the flag to start processing lines after the epoch line is found
+START_PROCESSING=false
 
-    if [[ -z $db_file ]] || [[ -z $search_exp ]]
-    then
-        echo "Missing arguments, usage: update_db <db-file> <search-exp>"
-        exit 1
+# Read the input file line by line
+while IFS= read -r line; do
+  if [[ $line =~ $EPOCH_PATTERN ]]; then
+    START_PROCESSING=true
+    continue
+  fi
+  
+  if $START_PROCESSING; then
+    pool=$(echo $line | awk '{print $1}')
+    price=$(echo $line | awk '{$1=""; print $0}' | sed 's/^ *//; s/ *$//')
+    
+    if [ ! -f "./db/${pool}.csv" ]; then
+      echo "timestamp,epoch,price" > "./db/${pool}.csv"
     fi
-
-    price=$($GREP_CMD -ioP "^$search_exp \K[0-9.]*" "$result_file")
-    if [[ -z $price ]]
-    then
-        echo "Price not found in the result file!"
-        return
-    fi
-
-    echo "Found price for $search_exp: $price"
-
-    echo "$now,$epoch,$price" >> "$db_file"
-}
-
-update_db './db/laine.csv' Laine
-update_db './db/cogent.csv' Cogent
-update_db './db/everstake.csv' Everstake
-update_db './db/solblaze.csv' SolBlaze
-update_db './db/daopool.csv' DAOPool
-update_db './db/jpool.csv' JPool
-update_db './db/socean.csv' INF
-update_db './db/jito.csv' Jito
-update_db './db/lst.csv' LST
-update_db './db/edgevana.csv' Edgevana
-update_db './db/hub.csv' Hub
-update_db './db/lido.csv' Lido
-update_db './db/marinade.csv' Marinade
-update_db './db/pwrsol.csv' PwrSOL
-update_db './db/picosol.csv' PicoSOL
-update_db './db/vsol.csv' vSOL
+    echo "$now,$epoch,$price" >> "./db/${pool}.csv"
+    
+    echo "Updated or created file: ${pool}.csv with content: $price"
+  fi
+done < "$result_file"
 
 rm "$result_file"
