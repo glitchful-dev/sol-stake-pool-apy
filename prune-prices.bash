@@ -2,7 +2,6 @@
 
 set -x
 
-db_file="$1"
 for db_file in db/*; do
     if [[ -z $db_file ]]
     then
@@ -25,7 +24,7 @@ for db_file in db/*; do
         previous_epoch = current_epoch
         previous_record = $0
     } END {
-    print previous_record
+        print previous_record
     }' > "$db_file"
     rm "$tmp_file"
 done
