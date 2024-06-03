@@ -2,9 +2,8 @@
 
 set -x
 
-function prune_db {
-    db_file="$1"
-
+db_file="$1"
+for db_file in db/*; do
     if [[ -z $db_file ]]
     then
         echo "Missing arguments, usage: prune_db <db-file>"
@@ -26,24 +25,7 @@ function prune_db {
         previous_epoch = current_epoch
         previous_record = $0
     } END {
-      print previous_record
+    print previous_record
     }' > "$db_file"
     rm "$tmp_file"
-}
-
-prune_db './db/laine.csv'
-prune_db './db/cogent.csv'
-prune_db './db/everstake.csv'
-prune_db './db/solblaze.csv'
-prune_db './db/daopool.csv'
-prune_db './db/jpool.csv'
-prune_db './db/socean.csv'
-prune_db './db/jito.csv'
-prune_db './db/lst.csv'
-prune_db './db/edgevana.csv'
-prune_db './db/hub.csv'
-prune_db './db/lido.csv'
-prune_db './db/marinade.csv'
-prune_db './db/pwrsol.csv'
-prune_db './db/picosol.csv'
-prune_db './db/vsol.csv'
+done
