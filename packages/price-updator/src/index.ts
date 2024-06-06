@@ -35,14 +35,20 @@ const getEnvVar = (key: string) => {
   const splPoolAccounts = await connection.getProgramAccounts(
     new PublicKey('SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy')
   );
-  splPoolAccounts.forEach(account => {
+  const sanctumSPLAccounts = await connection.getProgramAccounts(
+    new PublicKey('SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY')
+  );
+  [...splPoolAccounts, ...sanctumSPLAccounts].forEach(account => {
     try {
       const publicKey = account.pubkey.toBase58();
       const parsedInfo = StakePoolLayout.decode(account.account.data);
-
       const knownName = pairs[publicKey];
       logger.info('Name:', {knownName});
-      if (!parsedInfo.lastEpochTotalLamports.isZero()) {
+      // 1 = AccountType.StakePool
+      if (
+        parsedInfo.accountType === 1 &&
+        !parsedInfo.lastEpochPoolTokenSupply.isZero()
+      ) {
         trackers.push(
           new SPLStakePoolTracker(
             knownName ?? publicKey,
