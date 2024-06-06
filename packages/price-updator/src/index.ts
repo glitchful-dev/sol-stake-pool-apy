@@ -1,4 +1,4 @@
-import {Connection, PublicKey} from '@solana/web3.js';
+import {Connection, LAMPORTS_PER_SOL, PublicKey} from '@solana/web3.js';
 import {SPLStakePoolTracker} from './trackers/SPLStakePoolTracker';
 import {StakePoolTracker} from './trackers/StakePoolTracker';
 import {SolidoTracker} from './trackers/SolidoTracker';
@@ -7,6 +7,7 @@ import {Logger} from './utils';
 import assert from 'node:assert';
 import {StakePoolLayout} from './spl-utils';
 import {pairs} from './known-spl-pools';
+import {BN} from '@marinade.finance/marinade-ts-sdk';
 
 const getEnvVar = (key: string) => {
   const envVarValue = process.env[key];
@@ -44,11 +45,9 @@ const getEnvVar = (key: string) => {
       const parsedInfo = StakePoolLayout.decode(account.account.data);
       const knownName = pairs[publicKey];
       logger.info('Name:', {knownName});
+      const totalStake = parsedInfo.totalLamports.div(new BN(LAMPORTS_PER_SOL));
       // 1 = AccountType.StakePool
-      if (
-        parsedInfo.accountType === 1 &&
-        !parsedInfo.lastEpochPoolTokenSupply.isZero()
-      ) {
+      if (parsedInfo.accountType === 1 && totalStake >= 1000) {
         trackers.push(
           new SPLStakePoolTracker(
             knownName ?? publicKey,
