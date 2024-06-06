@@ -40,4 +40,4 @@ This ensures fairness for stake pool users who are then given an opportunity to 
 ## Supported stakepools 
 The following stakepools' APY can be obtained through this SDK: 
 
-mSOL / stSOL / jitoSOL / bSOL / INF / eSOL / LaineSOL / CgntSOL / daoSOL / LST / edgeSOL / hubSOL / pwrSOL / picoSOL
+mSOL / stSOL / jitoSOL / bSOL / INF / eSOL / LaineSOL / CgntSOL / daoSOL / LST / edgeSOL / hubSOL / pwrSOL / picoSOL / vSOL
