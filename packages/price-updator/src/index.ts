@@ -4,20 +4,17 @@ import {StakePoolTracker} from './trackers/StakePoolTracker';
 import {SolidoTracker} from './trackers/SolidoTracker';
 import {MarinadeTracker} from './trackers/MarinadeTracker';
 import {Logger} from './utils';
-import assert from 'node:assert';
 import {StakePoolLayout} from './spl-utils';
 import {pairs} from './known-spl-pools';
 import {BN} from '@marinade.finance/marinade-ts-sdk';
 
-const getEnvVar = (key: string) => {
-  const envVarValue = process.env[key];
-  assert.ok(envVarValue, `Environment variable ${key} is not defined!`);
-  return envVarValue;
-};
-
 (async () => {
   const logger = new Logger();
-  const clusterUrl = getEnvVar('RPC_URL');
+  const clusterUrl = process.env['RPC_URL'];
+  if (!clusterUrl) {
+    logger.error("Environment variable RPC_URL is not defined!")
+    return;
+  }
   const connection = new Connection(clusterUrl);
   const {epoch} = await connection.getEpochInfo();
   process.stdout.write(`epoch ${epoch}\n`);
