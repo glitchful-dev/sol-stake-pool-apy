@@ -11,7 +11,7 @@ export const pairs: {[key: string]: string} = {
   'DqhH94PjkZsjAqEze2BEkWhFQJ6EyU6MdtMphMgnXqeK': 'lst',
   'edgejNWAqkePLpi5sHRxT9vHi7u3kSHP9cocABPKiWZ': 'edgevana',
   'ECRqn7gaNASuvTyC5xfCUjehWZCSowMXstZiM5DNweyB': 'hub',
-  'Fu9BYC6tWBo1KMKaP3CFoKfRhqv9akmy3DuYwnCyWiyC': 'vsOL',
+  'Fu9BYC6tWBo1KMKaP3CFoKfRhqv9akmy3DuYwnCyWiyC': 'vsol',
   'DfiQgSvpW3Dy4gKfhtdHnWGHwFUrE8exvaxqjtMtAVxk': 'PwrSOL',
   '8Dv3hNYcEWEaa4qVx9BTN1Wfvtha1z8cWDUXb7KVACVe': 'PicoSOL',
   'Bnks1YdMj6nL8P4moRFTZnK6PUxsXGjzKU4n15zRzjix': 'bonkSOL',
