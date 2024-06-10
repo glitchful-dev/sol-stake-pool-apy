@@ -4,7 +4,7 @@ import {SolidoSDK} from '@lidofinance/solido-sdk';
 import {Logger} from '../utils';
 
 export class SolidoTracker implements StakePoolTracker {
-  public poolName = 'Lido';
+  public poolName = 'lido';
   private readonly logger = new Logger(`tracker:${this.poolName}`);
   constructor(private readonly connection: Connection) {}
 

@@ -4,7 +4,7 @@ import {StakePoolTracker} from './StakePoolTracker';
 import {Marinade, MarinadeConfig} from '@marinade.finance/marinade-ts-sdk';
 
 export class MarinadeTracker implements StakePoolTracker {
-  public poolName = 'Marinade';
+  public poolName = 'marinade';
   private readonly logger = new Logger(`tracker:${this.poolName}`);
   constructor(private readonly connection: Connection) {}
 
