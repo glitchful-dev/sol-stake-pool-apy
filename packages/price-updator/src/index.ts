@@ -12,7 +12,7 @@ import {BN} from '@marinade.finance/marinade-ts-sdk';
   const logger = new Logger();
   const clusterUrl = process.env['RPC_URL'];
   if (!clusterUrl) {
-    logger.error("Environment variable RPC_URL is not defined!")
+    logger.error('Environment variable RPC_URL is not defined!');
     return;
   }
   const connection = new Connection(clusterUrl);
@@ -36,27 +36,34 @@ import {BN} from '@marinade.finance/marinade-ts-sdk';
   const sanctumSPLAccounts = await connection.getProgramAccounts(
     new PublicKey('SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY')
   );
-  [...splPoolAccounts, ...sanctumSPLAccounts].forEach(account => {
-    try {
-      const publicKey = account.pubkey.toBase58();
-      const parsedInfo = StakePoolLayout.decode(account.account.data);
-      const knownName = pairs[publicKey];
-      logger.info('Name:', {knownName});
-      const totalStake = parsedInfo.totalLamports.div(new BN(LAMPORTS_PER_SOL));
-      // 1 = AccountType.StakePool
-      if (parsedInfo.accountType === 1 && totalStake >= 1000) {
-        trackers.push(
-          new SPLStakePoolTracker(
-            knownName ?? publicKey,
-            connection,
-            new PublicKey(publicKey)
-          )
+  const extraSplPoolAccounts = await connection.getProgramAccounts(
+    new PublicKey('SPMBzsVUuoHA4Jm6KunbsotaahvVikZs1JyTW6iJvbn')
+  );
+  [...splPoolAccounts, ...sanctumSPLAccounts, ...extraSplPoolAccounts].forEach(
+    account => {
+      try {
+        const publicKey = account.pubkey.toBase58();
+        const parsedInfo = StakePoolLayout.decode(account.account.data);
+        const knownName = pairs[publicKey];
+        logger.info('Name:', {knownName});
+        const totalStake = parsedInfo.totalLamports.div(
+          new BN(LAMPORTS_PER_SOL)
         );
+        // 1 = AccountType.StakePool
+        if (parsedInfo.accountType === 1 && totalStake >= 1000) {
+          trackers.push(
+            new SPLStakePoolTracker(
+              knownName ?? publicKey,
+              connection,
+              new PublicKey(publicKey)
+            )
+          );
+        }
+      } catch (ex) {
+        logger.error('Ex', {ex});
       }
-    } catch (ex) {
-      logger.error('Ex', {ex});
     }
-  });
+  );
 
   for (const tracker of trackers) {
     try {

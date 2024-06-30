@@ -56,4 +56,8 @@ export const pairs: {[key: string]: string} = {
   '6LXCxeyQZqdAL4yLCtgATFYF6dcayWvsiwjtBFYVfb1N': 'rkSOL',
   'GZDX5JYXDzCEDL3kybhjN7PSixL4ams3M2G4CvWmMmm5': 'strongSOL',
   '8WHCJsUduwDBhPL9uVADQSdWkUi2LPZNFAMyX1n2HGMD': 'pumpkinSOL',
+  '8VpRhuxa7sUUepdY3kQiTmX9rS5vx4WgaXiAnXq4KCtr': 'jupSOL',
+  'GutG5bcmEZw15WmPHNVMWHU77c6t8CEinUEdPLYz3doa': 'fpSOL',
+  'phasejkG1akKgqkLvfWzWY17evnH6mSWznnUspmpyeG': 'phaseSOL',
+  'EVXQHaLSJyUNrnBGfXUnvEi4DvVz4UJ3GnoKGVQVxrjr': 'iceSOL',
 };
