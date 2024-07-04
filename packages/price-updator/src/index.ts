@@ -5,8 +5,8 @@ import {SolidoTracker} from './trackers/SolidoTracker';
 import {MarinadeTracker} from './trackers/MarinadeTracker';
 import {Logger} from './utils';
 import {StakePoolLayout} from './spl-utils';
-import {pairs} from './known-spl-pools';
 import {BN} from '@marinade.finance/marinade-ts-sdk';
+import { pairs } from '../../sol-apy-sdk';
 
 (async () => {
   const logger = new Logger();
