@@ -1,30 +1,13 @@
 import fetchPonyfill from 'fetch-ponyfill';
 import { Readable } from 'stream';
 import { parse } from 'csv-parse';
+import { pairs } from './known-spl-pools';
 const { fetch } = fetchPonyfill();
+
+export { pairs } from './known-spl-pools';
 
 const DATA_SOURCE_BASE =
   'https://raw.githubusercontent.com/glitchful-dev/sol-stake-pool-apy/master/db/';
-export const DATA_SOURCE = {
-  JITO_CSV: `${DATA_SOURCE_BASE}jito.csv`,
-  LAINE_CSV: `${DATA_SOURCE_BASE}laine.csv`,
-  COGENT_CSV: `${DATA_SOURCE_BASE}cogent.csv`,
-  DAOPOOL_CSV: `${DATA_SOURCE_BASE}daopool.csv`,
-  EVERSTAKE_CSV: `${DATA_SOURCE_BASE}everstake.csv`,
-  INF_CSV: `${DATA_SOURCE_BASE}socean.csv`,
-  JPOOL_CSV: `${DATA_SOURCE_BASE}jpool.csv`,
-  SOLBLAZE_CSV: `${DATA_SOURCE_BASE}solblaze.csv`,
-  LST_CSV: `${DATA_SOURCE_BASE}lst.csv`,
-  LIDO_CSV: `${DATA_SOURCE_BASE}lido.csv`,
-  MARINADE_CSV: `${DATA_SOURCE_BASE}marinade.csv`,
-  EDGEVANA_CSV: `${DATA_SOURCE_BASE}edgevana.csv`,
-  HUB_CSV: `${DATA_SOURCE_BASE}hub.csv`,
-  PWRSOL_CSV: `${DATA_SOURCE_BASE}pwrsol.csv`,
-  PICOSOL_CSV: `${DATA_SOURCE_BASE}picosol.csv`,
-  VSOL_CSV: `${DATA_SOURCE_BASE}vsol.csv`,
-};
-
-const DEFAULT_EPOCHS = 10;
 
 export type PriceRecord = {
   timestamp: number;
@@ -67,6 +50,20 @@ export const parsePriceRecordsFromCSV = async (
     records.push(record);
   }
   return records;
+};
+
+export const fetchCSVLink = (poolAddress: string): string => {
+  const knownName = pairs[poolAddress];
+  return `${DATA_SOURCE_BASE}${knownName}`;
+};
+
+export const fetchPricesFromCsv = async (poolAddress: string) => {
+  const csvLink = fetchCSVLink(poolAddress);
+  const csvResponse = await fetch(csvLink);
+  const csvContents = await csvResponse.text();
+  const prices = await parsePriceRecordsFromCSV(Readable.from([csvContents]));
+
+  return prices;
 };
 
 export const fetchAndParsePricesCsv = async (url: string) => {

@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unpublished-import */
 import {Connection, LAMPORTS_PER_SOL, PublicKey} from '@solana/web3.js';
 import {SPLStakePoolTracker} from './trackers/SPLStakePoolTracker';
 import {StakePoolTracker} from './trackers/StakePoolTracker';
@@ -5,8 +6,8 @@ import {SolidoTracker} from './trackers/SolidoTracker';
 import {MarinadeTracker} from './trackers/MarinadeTracker';
 import {Logger} from './utils';
 import {StakePoolLayout} from './spl-utils';
-import {pairs} from './known-spl-pools';
 import {BN} from '@marinade.finance/marinade-ts-sdk';
+import {pairs} from '../../sol-apy-sdk/known-spl-pools';
 
 (async () => {
   const logger = new Logger();

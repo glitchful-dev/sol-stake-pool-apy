@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 // Since name will be used for the CSV file, it must not contain space
 export const pairs: {[key: string]: string} = {
+  'MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD': 'marinade',
+  'CrX7kMhLC3cSsXJdT7JDgqrRVWGnUpX3gfEfxxU2NVLi': 'lido',
   'CgntPoLka5pD5fesJYhGmUCF8KU1QS1ZmZiuAuMZr2az': 'cogent',
   '2qyEeSAWKfU18AFthrF7JA8z8ZCi1yt76Tqs917vwQTV': 'laine',
   'CtMyWsrUtAwXWiGr9WjHT5fC3p3fgV8cyGpLTo2LJzG1': 'jpool',
