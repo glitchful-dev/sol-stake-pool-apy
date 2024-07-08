@@ -54,7 +54,7 @@ export const parsePriceRecordsFromCSV = async (
 
 export const fetchCSVLink = (poolAddress: string): string => {
   const knownName = pairs[poolAddress];
-  return `${DATA_SOURCE_BASE}${knownName}`;
+  return `${DATA_SOURCE_BASE}${knownName}.csv`;
 };
 
 export const fetchPricesFromCsv = async (poolAddress: string) => {
