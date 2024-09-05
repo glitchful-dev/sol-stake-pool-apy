@@ -11,20 +11,17 @@ for db_file in db/*; do
     tmp_file=$(mktemp)
     cp "$db_file" "$tmp_file"
     awk -F , '{
-        current = $2 "," substr($3, 1, 8)
-        if (previous != current) {
-            print $0
-        }
-        previous = current
-    }' "$tmp_file" | awk -F , '{
         current_epoch = $2
-        if (current_epoch != previous_epoch && previous_record) {
-            print previous_record
+        if (current_epoch != previous_epoch && NR > 1) {
+            print first_date "," previous_epoch "," last_value
         }
+        if (current_epoch != previous_epoch) {
+            first_date = $1
+        }
+        last_value = $3
         previous_epoch = current_epoch
-        previous_record = $0
     } END {
-        print previous_record
-    }' > "$db_file"
+        print first_date "," previous_epoch "," last_value
+    }' "$tmp_file" > "$db_file"
     rm "$tmp_file"
 done
