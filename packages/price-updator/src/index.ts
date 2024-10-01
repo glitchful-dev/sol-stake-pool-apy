@@ -51,7 +51,7 @@ import {pairs} from '../../sol-apy-sdk/known-spl-pools';
           new BN(LAMPORTS_PER_SOL)
         );
         // 1 = AccountType.StakePool
-        if (parsedInfo.accountType === 1 && totalStake >= 1000) {
+        if (parsedInfo.accountType === 1 && totalStake >= 500) {
           trackers.push(
             new SPLStakePoolTracker(
               knownName ?? publicKey,
