@@ -62,4 +62,18 @@ export const pairs: {[key: string]: string} = {
   'GutG5bcmEZw15WmPHNVMWHU77c6t8CEinUEdPLYz3doa': 'fpSOL',
   'phasejkG1akKgqkLvfWzWY17evnH6mSWznnUspmpyeG': 'phaseSOL',
   'EVXQHaLSJyUNrnBGfXUnvEi4DvVz4UJ3GnoKGVQVxrjr': 'iceSOL',
+  'Hr9pzexrBge3vgmBNRR8u42CNQgBXdHm4UkUN2DH4a7r': 'bnSOL',
+  'HSDnqBq7EnfcKpnw52DTAZrP38tf8rdWLiRhQo4qGTUa': 'lifSOL',
+  'GM7TwD34n8HmDP9XcT6bD3JJuNniKJkrKQinHqmqHarz': 'pathSOL',
+  'G9Jgnqhq5MaDNmLSgTDSmiWRcmq67Q7yVnXjoA8tUsGX': 'eonSOL',
+  'FxhzbU8rn4MhZxmeH2u7M18qkvFH3LjkWk8z9686TE45': 'apySOL',
+  '9ovWYMZp18Qn7UVbyUvwqLSBBSEPDDA5q9pUgDFy6R23': 'haSOL',
+  '9jWbABPXfc75wseAbLEkBCb1NRaX9EbJZJTDQnbtpzc1': 'mangoSOL',
+  '7yQNEvbzH6KffCY7iYFrKCKXv8c9zB9jJREmPK6gBVYz': 'stepSOL',
+  '5UMja2dWNX3XhrBAvsoRteySTngfpQGHrWfHxueCs5s6': 'uptSOL',
+  '4yQWc4Zss8YqWoVCwuSm3wVXebdHx9z6dPigH5eLqugm': 'lotusSOL',
+  '4fdMvFuyNboQ5Kr93X16f1tFcTeEkvfNwNAeSrzY3afb': 'banxSOL',
+  '2aMLkB5p5gVvCwKkdSo5eZAL1WwhZbxezQr1wxiynRhq': 'bybitSOL',
+  'aero2ePURjuEgLKTzcUmF6RypBncBGd7pMUYCoSsVJ6': 'aeroSOL',
+  '9Z8yimuc3bQCWLDyMhe6jfWqNk9EggyJZUo8TLnYsqhN': 'wifSOL'
 };
