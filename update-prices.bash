@@ -32,8 +32,8 @@ while IFS= read -r line; do
   fi
   
   if $START_PROCESSING; then
-    pool=$(echo $line | awk '{print $1}')
-    price=$(echo $line | awk '{$1=""; print $0}' | sed 's/^ *//; s/ *$//')
+    pool=$(echo "$line" | awk '{print $1}')
+    price=$(echo "$line" | awk '{$1=""; print $0}' | sed 's/^ *//; s/ *$//')
     
     if [ ! -f "./db/${pool}.csv" ]; then
       echo "timestamp,epoch,price" > "./db/${pool}.csv"

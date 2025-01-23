@@ -1,10 +1,11 @@
-#  Solana APY SDK
+# Solana APY SDK
 
 This GitHub repository provides an SDK for calculating Annual Percentage Yield (APY) and a database of prices for major Solana stake pools. The purpose of this repository is to unify the calculation of APY across various Solana stake pools and simplify the process for developers to incorporate APY calculations into their Solana-based projects.
 
 ## Usage
 
 Install the package:
+
 ```bash
 pnpm install @glitchful-dev/sol-apy-sdk
 ```
@@ -24,6 +25,7 @@ import { fetchAndParsePricesCsv, getPriceRangeFromPeriod, calcYield, DATA_SOURCE
 ```
 
 ## Prices DB
+
 A Github action runs periodically and collects prices of some of the stake pools' tokens. The prices are stored in CSV files.
 
 ```mermaid
@@ -37,7 +39,8 @@ The data is collected at the same time for all target stake pools.
 The SDK calculates the APY in the same way for everyone.
 This ensures fairness for stake pool users who are then given an opportunity to compare how stake pools perform.
 
-## Supported stakepools 
+## Supported stakepools
+
 The following stakepools' APY can be obtained through this SDK: 
 
-mSOL / stSOL / jitoSOL / bSOL / INF / eSOL / LaineSOL / CgntSOL / daoSOL / LST / edgeSOL / hubSOL / pwrSOL / picoSOL / vSOL
+mSOL / stSOL / jitoSOL / bSOL / INF / eSOL / LaineSOL / CgntSOL / daoSOL / LST / edgeSOL / hubSOL / pwrSOL / picoSOL / pumpkinSOL / vSOL
