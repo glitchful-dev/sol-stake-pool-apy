@@ -75,5 +75,6 @@ export const pairs: {[key: string]: string} = {
   '4fdMvFuyNboQ5Kr93X16f1tFcTeEkvfNwNAeSrzY3afb': 'banxSOL',
   '2aMLkB5p5gVvCwKkdSo5eZAL1WwhZbxezQr1wxiynRhq': 'bybitSOL',
   'aero2ePURjuEgLKTzcUmF6RypBncBGd7pMUYCoSsVJ6': 'aeroSOL',
-  '9Z8yimuc3bQCWLDyMhe6jfWqNk9EggyJZUo8TLnYsqhN': 'wifSOL'
+  '9Z8yimuc3bQCWLDyMhe6jfWqNk9EggyJZUo8TLnYsqhN': 'wifSOL',
+  'PALdfXCXcDFkcjkLyN7XTsmY9YSSUP6M74nSeCuVNWS': 'palSOL'
 };
