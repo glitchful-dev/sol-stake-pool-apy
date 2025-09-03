@@ -3,11 +3,6 @@
 set -x
 
 for db_file in db/*; do
-    if [[ -z $db_file ]]
-    then
-        echo "Missing arguments, usage: prune_db <db-file>"
-        exit 1
-    fi
     tmp_file=$(mktemp)
     cp "$db_file" "$tmp_file"
     awk -F , '{
