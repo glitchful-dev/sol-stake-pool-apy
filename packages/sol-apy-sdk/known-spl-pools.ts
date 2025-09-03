@@ -76,5 +76,11 @@ export const pairs: {[key: string]: string} = {
   '2aMLkB5p5gVvCwKkdSo5eZAL1WwhZbxezQr1wxiynRhq': 'bybitSOL',
   'aero2ePURjuEgLKTzcUmF6RypBncBGd7pMUYCoSsVJ6': 'aeroSOL',
   '9Z8yimuc3bQCWLDyMhe6jfWqNk9EggyJZUo8TLnYsqhN': 'wifSOL',
-  'PALdfXCXcDFkcjkLyN7XTsmY9YSSUP6M74nSeCuVNWS': 'palSOL'
+  'PALdfXCXcDFkcjkLyN7XTsmY9YSSUP6M74nSeCuVNWS': 'palSOL',
+  '3fV1sdGeXaNEZj6EPDTpub82pYxcRXwt2oie6jkSzeWi': 'dzSOL',
+  'jagEdDepWUgexiu4jxojcRWcVKKwFqgZBBuAoGu2BxM': 'jagSOL',
+  'DpooSqZRL3qCmiq82YyB4zWmLfH3iEqx2gy8f2B6zjru': 'dynoSOL',
+  'po1osKDWYF9oiVEGmzKA4eTs8eMveFRMox3bUKazGN2': 'solayer',
+  'E2fVGkhB4No2KJiXCfVqLUPjjiuyJwmPod8BtcHXkcZk': 'sctmSOL',
+  'pSPcvR8GmG9aKDUbn9nbKYjkxt9hxMS7kF1qqKJaPqJ': 'PSOL',
 };

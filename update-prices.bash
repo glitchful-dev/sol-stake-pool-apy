@@ -2,16 +2,11 @@
 
 set -x
 
-GREP_CMD="grep"
-if [[ "$(uname)" == "Darwin" ]]; then
-    GREP_CMD="ggrep"
-fi
-
 result_file="./result.tmp"
 now="$(date -Iseconds)"
 
 pnpm run start > "$result_file"
-epoch=$($GREP_CMD -oP "^epoch \K[0-9.]*" "$result_file")
+epoch=$(awk '/^epoch [0-9]+$/ {print $2}' "$result_file")
 
 if [[ -z $epoch ]]
 then
