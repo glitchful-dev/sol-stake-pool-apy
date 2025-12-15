@@ -83,4 +83,5 @@ export const pairs: {[key: string]: string} = {
   'po1osKDWYF9oiVEGmzKA4eTs8eMveFRMox3bUKazGN2': 'solayer',
   'E2fVGkhB4No2KJiXCfVqLUPjjiuyJwmPod8BtcHXkcZk': 'sctmSOL',
   'pSPcvR8GmG9aKDUbn9nbKYjkxt9hxMS7kF1qqKJaPqJ': 'PSOL',
+  'RaiDhwyRoMVxLN9KD7kAXAwHbWKf1TCTe5HFSrPVJaD': 'raiSOL',
 };
